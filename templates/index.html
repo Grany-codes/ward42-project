@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome to Ward 42 Fix-It</h2>
+<p>Report potholes, burst pipes, and other issues in our community.</p>
+<h3>How to submit a report</h3>
+<video controls width="100%" poster="{{ url_for('static', filename='video/poster.jpg') }}">
+    <source src="{{ url_for('static', filename='video/tutorial.mp4') }}" type="video/mp4">
+    <source src="{{ url_for('static', filename='video/tutorial.webm') }}" type="video/webm">
+    <track src="{{ url_for('static', filename='video/captions.vtt') }}" kind="captions" srclang="en" label="English">
+    Your browser does not support the video tag.
+</video>
+{% endblock %}

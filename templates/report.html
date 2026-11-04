@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Report a Fault</h2>
+<form id="reportForm" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" name="category" required>
+            <option value="">Select...</option>
+            <option value="Pothole">Pothole</option>
+            <option value="Water leak">Water leak</option>
+            <option value="Streetlight">Streetlight</option>
+            <option value="Illegal dumping">Illegal dumping</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="street" class="form-label">Street Name and Landmark</label>
+        <input type="text" class="form-control" id="street" name="street" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description (10-500 characters)</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        <div id="descError" class="text-danger small"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="reporter_name" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="reporter_name" name="reporter_name" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="reporter_cell" class="form-label">Cell Number (e.g., 0821234567)</label>
+        <input type="tel" class="form-control" id="reporter_cell" name="reporter_cell" required>
+        <div id="cellError" class="text-danger small"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="photo" class="form-label">Photo (Optional, max 2MB)</label>
+        <input type="file" class="form-control" id="photo" name="photo" accept="image/jpeg,image/png,image/webp">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Report</button>
+</form>
+{% endblock %}

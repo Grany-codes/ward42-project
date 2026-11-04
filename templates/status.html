@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Check Report Status</h2>
+<form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="mb-3">
+        <label for="reference" class="form-label">Reference Number</label>
+        <input type="text" class="form-control" id="reference" name="reference" placeholder="W42-XXXX" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Check Status</button>
+</form>
+
+{% if report %}
+<hr>
+<h3>Report Details</h3>
+<p><strong>Reference:</strong> {{ report.reference }}</p>
+<p><strong>Category:</strong> {{ report.category }}</p>
+<p><strong>Street:</strong> {{ report.street }}</p>
+<p><strong>Status:</strong> <span class="badge bg-info">{{ report.status }}</span></p>
+{% if report.photo_path %}
+<img src="{{ url_for('uploaded_file', filename=report.photo_path) }}" alt="Report photo" class="img-fluid mt-2" style="max-height: 300px;">
+{% endif %}
+{% endif %}
+{% endblock %}

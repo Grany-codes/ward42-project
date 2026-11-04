@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Reports</h2>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <label for="filterCategory" class="form-label">Filter by Category</label>
+        <select class="form-select" id="filterCategory">
+            <option value="">All Categories</option>
+            <option value="Pothole">Pothole</option>
+            <option value="Water leak">Water leak</option>
+            <option value="Streetlight">Streetlight</option>
+            <option value="Illegal dumping">Illegal dumping</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="filterStatus" class="form-label">Filter by Status</label>
+        <select class="form-select" id="filterStatus">
+            <option value="">All Statuses</option>
+            <option value="Open">Open</option>
+            <option value="In progress">In progress</option>
+            <option value="Closed">Closed</option>
+        </select>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ref</th>
+            <th>Photo</th>
+            <th>Category</th>
+            <th>Street</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in reports %}
+        <tr class="report-row" data-category="{{ r.category }}" data-status="{{ r.status }}">
+            <td>{{ r.reference }}</td>
+            <td>
+                {% if r.photo_path %}
+                <img src="{{ url_for('uploaded_file', filename=r.photo_path) }}" alt="Thumbnail for {{ r.reference }}" width="50">
+                {% else %}
+                No photo
+                {% endif %}
+            </td>
+            <td>{{ r.category }}</td>
+            <td>{{ r.street }}</td>
+            <td>{{ r.status }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('update_status', report_id=r.id) }}" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <select name="status" class="form-select form-select-sm d-inline w-auto">
+                        <option value="Open" {% if r.status == 'Open' %}selected{% endif %}>Open</option>
+                        <option value="In progress" {% if r.status == 'In progress' %}selected{% endif %}>In progress</option>
+                        <option value="Closed" {% if r.status == 'Closed' %}selected{% endif %}>Closed</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-success">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
